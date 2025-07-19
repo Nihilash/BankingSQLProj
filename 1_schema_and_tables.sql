@@ -1,0 +1,49 @@
+-- Createing the database and use it
+CREATE DATABASE IF NOT EXISTS banking;
+USE banking;
+
+--  Createing Customer Table
+CREATE TABLE Customer (
+    Id INT PRIMARY KEY,
+    Name VARCHAR(50),
+    DOB DATE,
+    Age INT,
+    Gender VARCHAR(10) NOT NULL,
+    ContactNumber VARCHAR(20),
+    Address VARCHAR(100),
+    CustomerEmail VARCHAR(50) UNIQUE,
+    Password VARCHAR(100)  -- Added directly
+);
+
+-- Createing Bank Account Table
+CREATE TABLE BANKACCOUNT (
+    ACCOUNT_NO INT PRIMARY KEY,
+    CUSTOMER_ID INT,
+    ACCOUNT_TYPE VARCHAR(100),
+    BALANCE DECIMAL(30,5),
+    OPENDATE DATE,
+    STATUS VARCHAR(10),
+    FOREIGN KEY (CUSTOMER_ID) REFERENCES Customer(ID)
+);
+
+-- Createing Transactions Table
+CREATE TABLE TRANSACTIONS (
+    TRANSACTIONID INT AUTO_INCREMENT PRIMARY KEY,
+    ACCOUNTNO INT,
+    DATE DATETIME DEFAULT CURRENT_TIMESTAMP,
+    TYPEOFTRANSACTION VARCHAR(50) NOT NULL,
+    AMOUNT DECIMAL(30,5) NOT NULL,
+    REFERENCEACCOUNT INT,
+    TRANSFERTO INT DEFAULT NULL,
+    FOREIGN KEY (ACCOUNTNO) REFERENCES BANKACCOUNT(ACCOUNT_NO)
+);
+
+-- Createing Login Table
+CREATE TABLE Login (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(50) UNIQUE NOT NULL,
+    Password VARCHAR(100) NOT NULL,
+    Role ENUM('Admin', 'Customer') DEFAULT 'Customer',
+    CustomerID INT,
+    FOREIGN KEY (CustomerID) REFERENCES Customer(Id)
+);
