@@ -1,9 +1,6 @@
 -- stored procedures
 -- stored procedure for deposite
 DEPOSITE Procedure
-sql
-Copy
-Edit
 DELIMITER //
 CREATE PROCEDURE DEPOSITE (
     IN uname VARCHAR(100),
